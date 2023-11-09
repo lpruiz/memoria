@@ -17,16 +17,18 @@ function virarCarta() {
     if (travaTabuleiro || this.classList.contains('desabilitada')) return;
     if (this === primeiraCarta) return;
 
-    this.classList.add('virar');
+    setTimeout(() => {
+        this.classList.add('virar');
 
-    if (!virouCarta) {
-        virouCarta = true;
-        primeiraCarta = this;
-        return;
-    }
+        if (!virouCarta) {
+            virouCarta = true;
+            primeiraCarta = this;
+            return;
+        }
 
-    segundaCarta = this;
-    verificarIgualdade();
+        segundaCarta = this;
+        verificarIgualdade();
+    }, 100);
 }
 
 function verificarIgualdade() {
@@ -38,7 +40,7 @@ function verificarIgualdade() {
 function desabilitarCartas() {
     primeiraCarta.removeEventListener('click', virarCarta);
     segundaCarta.removeEventListener('click', virarCarta);
-    
+
     primeiraCarta.classList.add('desabilitada');
     segundaCarta.classList.add('desabilitada');
 
@@ -59,10 +61,12 @@ function desvirarCartas() {
 function resetarTabuleiro() {
     [virouCarta, travaTabuleiro] = [false, false];
     [primeiraCarta, segundaCarta] = [null, null];
+
+    cartas.forEach(carta => {
+        carta.classList.remove('desabilitada');
+    });
 }
 
 cartas.forEach(carta => {
-    if (!carta.classList.contains('desabilitada')) {
-        carta.addEventListener('click', virarCarta);
-    }
+    carta.addEventListener('click', virarCarta);
 });
