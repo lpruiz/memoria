@@ -17,6 +17,8 @@ body {
     width: 100px;
     height: 150px;
     perspective: 1000px;
+    position: relative; /* Adicione esta linha */
+    cursor: pointer; /* Adicione esta linha */
 }
 
 .carta img {
@@ -24,6 +26,8 @@ body {
     height: 100%;
     object-fit: cover;
     position: absolute;
+    backface-visibility: hidden; /* Adicione esta linha */
+    transition: transform 0.5s; /* Adicione esta linha */
 }
 
 .frente {
@@ -32,4 +36,13 @@ body {
 
 .verso {
     transform: rotateY(180deg);
+}
+
+.virar {
+    transform: rotateY(180deg);
+}
+
+.desabilitada {
+    pointer-events: none; /* Impede que cartas desabilitadas sejam clicadas */
+    opacity: 0.7; /* Altera a opacidade de cartas desabilitadas */
 }
