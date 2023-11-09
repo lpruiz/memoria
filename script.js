@@ -15,7 +15,7 @@ embaralharCartas();
 
 function virarCarta() {
   if (travaTabuleiro || this.classList.contains('desabilitada')) return;
-  if (this === primeiraCarta) return;
+  if (this === primeiraCarta || this === segundaCarta) return;
 
   this.classList.add('virar');
 
