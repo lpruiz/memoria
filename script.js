@@ -4,6 +4,15 @@ let virouCarta = false;
 let travaTabuleiro = false;
 let primeiraCarta, segundaCarta;
 
+function embaralharCartas() {
+    cartas.forEach(carta => {
+        const posicaoAleatoria = Math.floor(Math.random() * cartas.length);
+        carta.style.order = posicaoAleatoria;
+    });
+}
+
+embaralharCartas();
+
 function virarCarta() {
     if (travaTabuleiro || this.classList.contains('desabilitada')) return;
     if (this === primeiraCarta) return;
