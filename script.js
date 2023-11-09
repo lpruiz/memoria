@@ -5,68 +5,70 @@ let travaTabuleiro = false;
 let primeiraCarta, segundaCarta;
 
 function embaralharCartas() {
-    cartas.forEach(carta => {
-        const posicaoAleatoria = Math.floor(Math.random() * cartas.length);
-        carta.style.order = posicaoAleatoria;
-    });
+  cartas.forEach(carta => {
+    const posicaoAleatoria = Math.floor(Math.random() * cartas.length);
+    carta.style.order = posicaoAleatoria;
+  });
 }
 
 embaralharCartas();
 
 function virarCarta() {
-    if (travaTabuleiro || this.classList.contains('desabilitada')) return;
-    if (this === primeiraCarta) return;
+  if (travaTabuleiro || this.classList.contains('desabilitada')) return;
+  if (this === primeiraCarta) return;
 
-    setTimeout(() => {
-        this.classList.add('virar');
+  this.removeEventListener('click', virarCarta); // Prevent multiple clicks
 
-        if (!virouCarta) {
-            virouCarta = true;
-            primeiraCarta = this;
-            return;
-        }
+  setTimeout(() => {
+    this.classList.add('virar');
 
-        segundaCarta = this;
-        verificarIgualdade();
-    }, 100);
+    if (!virouCarta) {
+      virouCarta = true;
+      primeiraCarta = this;
+      return;
+    }
+
+    segundaCarta = this;
+    verificarIgualdade();
+  }, 50); // Reduce flipping delay
 }
 
 function verificarIgualdade() {
-    let saoIguais = primeiraCarta.dataset.framework === segundaCarta.dataset.framework;
+  let saoIguais = primeiraCarta.dataset.framework === segundaCarta.dataset.framework;
 
-    saoIguais ? desabilitarCartas() : desvirarCartas();
+  saoIguais ? desabilitarCartas() : desvirarCartas();
 }
 
 function desabilitarCartas() {
-    primeiraCarta.removeEventListener('click', virarCarta);
-    segundaCarta.removeEventListener('click', virarCarta);
+  primeiraCarta.removeEventListener('click', virarCarta);
+  segundaCarta.removeEventListener('click', virarCarta);
 
-    primeiraCarta.classList.add('desabilitada');
-    segundaCarta.classList.add('desabilitada');
+  primeiraCarta.classList.add('desabilitada');
+  segundaCarta.classList.add('desabilitada');
 
-    resetarTabuleiro();
+  resetarTabuleiro();
 }
 
 function desvirarCartas() {
-    travaTabuleiro = true;
+  travaTabuleiro = true;
 
-    setTimeout(() => {
-        primeiraCarta.classList.remove('virar');
-        segundaCarta.classList.remove('virar');
+  setTimeout(() => {
+    primeiraCarta.classList.remove('virar');
+    segundaCarta.classList.remove('virar');
 
-        resetarTabuleiro();
-    }, 1000);
+    primeiraCarta.addEventListener('click', virarCarta); // Reset click listeners
+    segundaCarta.addEventListener('click', virarCarta);
+
+    resetarTabuleiro();
+  }, 1000);
 }
 
 function resetarTabuleiro() {
-    [virouCarta, travaTabuleiro] = [false, false];
-    [primeiraCarta, segundaCarta] = [null, null];
+  [virouCarta, travaTabuleiro] = [false, false];
+  [primeiraCarta, segundaCarta] = [null, null];
 
-    cartas.forEach(carta => {
-        carta.classList.remove('desabilitada');
-    });
+  cartas.forEach(carta => {
+    carta.classList.remove('desabilitada');
+    carta.addEventListener('click', virarCarta); // Reset click listeners
+  });
 }
-
-cartas.forEach(carta => {
-    carta.addEventListener('click', virarCarta);
-});
