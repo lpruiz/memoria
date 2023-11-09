@@ -5,7 +5,7 @@ let travaTabuleiro = false;
 let primeiraCarta, segundaCarta;
 
 function virarCarta() {
-    if (travaTabuleiro) return;
+    if (travaTabuleiro || this.classList.contains('desabilitada')) return;
     if (this === primeiraCarta) return;
 
     this.classList.add('virar');
@@ -29,6 +29,9 @@ function verificarIgualdade() {
 function desabilitarCartas() {
     primeiraCarta.removeEventListener('click', virarCarta);
     segundaCarta.removeEventListener('click', virarCarta);
+    
+    primeiraCarta.classList.add('desabilitada');
+    segundaCarta.classList.add('desabilitada');
 
     resetarTabuleiro();
 }
@@ -49,4 +52,8 @@ function resetarTabuleiro() {
     [primeiraCarta, segundaCarta] = [null, null];
 }
 
-cartas.forEach(carta => carta.addEventListener('click', virarCarta));
+cartas.forEach(carta => {
+    if (!carta.classList.contains('desabilitada')) {
+        carta.addEventListener('click', virarCarta);
+    }
+});
