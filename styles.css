@@ -9,16 +9,18 @@ body {
 
 .jogo-da-memoria {
     display: grid;
-    grid-template-columns: repeat(3, 100px);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     grid-gap: 10px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .carta {
-    width: 100px;
-    height: 150px;
+    width: 150px;
+    height: 200px;
     perspective: 1000px;
-    position: relative; /* Adicione esta linha */
-    cursor: pointer; /* Adicione esta linha */
+    position: relative;
+    cursor: pointer;
 }
 
 .carta img {
@@ -26,8 +28,8 @@ body {
     height: 100%;
     object-fit: cover;
     position: absolute;
-    backface-visibility: hidden; /* Adicione esta linha */
-    transition: transform 0.5s; /* Adicione esta linha */
+    backface-visibility: hidden;
+    transition: transform 0.5s;
 }
 
 .frente {
