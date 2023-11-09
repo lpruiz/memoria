@@ -16,8 +16,8 @@ body {
 }
 
 .carta {
-  width: 150px;
-  height: 200px;
+  width: 100px;
+  height: 150px;
   perspective: 1000px;
   position: relative;
   cursor: pointer;
